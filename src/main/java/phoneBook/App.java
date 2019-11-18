@@ -2,6 +2,7 @@ package phoneBook;
 
 import phoneBook.persistance.PhoneBookItemRepository;
 import phoneBook.transfer.CreatePhoneBookItemRequest;
+import phoneBook.transfer.UpdatePhoneBookItemRequest;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,13 +14,14 @@ import java.sql.SQLException;
 public class App 
 {
     public static void main( String[] args ) throws SQLException, IOException, ClassNotFoundException {
-        CreatePhoneBookItemRequest request = new CreatePhoneBookItemRequest();
-        request.setFirstName("Roberto");
-        request.setLastName("Piccolino");
-        request.setCountry("Italy");
-        request.setCity("Rome");
-        request.setPhoneNumber("+40427192027");
+//        UpdatePhoneBookItemRequest updatePhoneBookItemRequest = new UpdatePhoneBookItemRequest();
+//        updatePhoneBookItemRequest.setFirstName("Johny");
+//        updatePhoneBookItemRequest.setId(2);
+////        request.setLastName("Piccolino");
+////        request.setCountry("Italy");
+////        request.setCity("Rome");
+////        request.setPhoneNumber("+40427192027");
         PhoneBookItemRepository repository = new PhoneBookItemRepository();
-        repository.createPhoneBookItem(request);
+        repository.getPhoneBookItems();
     }
 }

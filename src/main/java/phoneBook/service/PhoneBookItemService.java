@@ -3,6 +3,7 @@ package phoneBook.service;
 import phoneBook.domain.PhoneBookItem;
 import phoneBook.persistance.PhoneBookItemRepository;
 import phoneBook.transfer.CreatePhoneBookItemRequest;
+import phoneBook.transfer.GetPhoneBookItemRequest;
 import phoneBook.transfer.UpdatePhoneBookItemRequest;
 
 import java.io.IOException;
@@ -28,8 +29,18 @@ public class PhoneBookItemService {
         phoneBookItemRepository.deletePhoneBookItem(id);
     }
 
+    public void deleteAllPhoneBookItems() throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("Deleting all phone-book-item: ");
+        phoneBookItemRepository.deleteAllPhoneBookItems();
+    }
+
     public List<PhoneBookItem> getPhoneBookItems() throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Retrieving phone-book-item: ");
         return phoneBookItemRepository.getPhoneBookItems();
+    }
+
+    public PhoneBookItem getOnePhoneBookItem(long id) throws SQLException, IOException, ClassNotFoundException {
+        System.out.println("Retrieving one item: " + id);
+        return phoneBookItemRepository.getPhoneBookItem(id);
     }
 }

@@ -48,13 +48,17 @@ public class PhoneBookItemRepository {
         }
     }
 
-    public void deleteAllPhoneBookItems() throws SQLException, IOException, ClassNotFoundException {
-        String sql = "DELETE FROM phone_book_item";
-        try(Connection connection = DatabaseConfiguration.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.executeUpdate();
+    public void deletePhoneBookItems(long[] id) throws SQLException, IOException, ClassNotFoundException {
+        String sql = "DELETE FROM phone_book_item WHERE id in (?)";
+        try (Connection connection = DatabaseConfiguration.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < id.length; i++) {
+                preparedStatement.setLong(1, id[i]);
+                preparedStatement.executeUpdate();
+            }
         }
     }
+
 
     public List<PhoneBookItem> getPhoneBookItems() throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT id, firstName, lastName, phoneNumber, country, city FROM phone_book_item";
@@ -76,30 +80,18 @@ public class PhoneBookItemRepository {
         return phoneBookItems;
     }
 
-//    public List<PhoneBookItem> getOnePhoneBookItem() throws SQLException, IOException, ClassNotFoundException {
-//        String sql = "SELECT firstName, lastName FROM phone_book_item";
-//        List<PhoneBookItem> phoneBookItems = new ArrayList<>();
-//        try (Connection connection = DatabaseConfiguration.getConnection();
-//             Statement statement = connection.createStatement();
-//             ResultSet resultSet = statement.executeQuery(sql)) {
-//            while (resultSet.next()) {
-//                PhoneBookItem phoneBookItem = new PhoneBookItem();
-//                phoneBookItem.setId(resultSet.getLong("id"));
-//                phoneBookItem.setFirstName(resultSet.getString("firstName"));
-//                phoneBookItem.setLastName(resultSet.getString("lastName"));
-//                phoneBookItems.add(phoneBookItem);
-//            }
-//        }
-//        return phoneBookItems;
-//    }
-
-    public PhoneBookItem getPhoneBookItem(long id) throws SQLException, IOException, ClassNotFoundException {
+    public GetPhoneBookItemRequest getPhoneBookItem(long id) throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT firstName, lastName FROM phone_book_item WHERE id=?";
-        PhoneBookItem phoneBookItem = new PhoneBookItem();
+        GetPhoneBookItemRequest request1 = new GetPhoneBookItemRequest();
         try (Connection connection = DatabaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
-            preparedStatement.execute();
-        } return phoneBookItem;
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                request1.setFirstName(resultSet.getString("firstName"));
+                request1.setLastName(resultSet.getString("lastName"));
+            }
+            return request1;
+        }
     }
 }

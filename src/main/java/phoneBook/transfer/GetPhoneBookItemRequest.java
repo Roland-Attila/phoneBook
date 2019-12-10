@@ -3,7 +3,6 @@ package phoneBook.transfer;
 
 public class GetPhoneBookItemRequest {
 
-//    private long id;
     private String firstName;
     private String lastName;
 
@@ -23,18 +22,9 @@ public class GetPhoneBookItemRequest {
         this.lastName = lastName;
     }
 
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
-
     @Override
     public String toString() {
         return "GetPhoneBookItemRequest{" +
-//                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
